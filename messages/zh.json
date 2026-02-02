@@ -1,0 +1,32 @@
+{
+  "common": {
+    "appName": "链接聚合",
+    "home": "首页",
+    "collections": "合集",
+    "myPage": "我的",
+    "signIn": "登录",
+    "signOut": "退出"
+  },
+  "home": {
+    "title": "发现精选链接合集",
+    "subtitle": "探索社区精心策划的高质量合集",
+    "featured": "精选合集",
+    "recent": "最近更新"
+  },
+  "collection": {
+    "links": "链接",
+    "by": "创建者",
+    "bookmark": "收藏",
+    "share": "分享",
+    "used": "我用过",
+    "later": "待研究"
+  },
+  "myPage": {
+    "title": "我的页面",
+    "myCollections": "我的合集",
+    "bookmarkedCollections": "收藏的合集",
+    "bookmarkedLinks": "收藏的链接",
+    "noCollections": "你还没有创建任何合集",
+    "noBookmarks": "你还没有收藏任何内容"
+  }
+}

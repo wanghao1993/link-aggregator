@@ -1,0 +1,32 @@
+{
+  "common": {
+    "appName": "Link Aggregator",
+    "home": "Home",
+    "collections": "Collections",
+    "myPage": "My Page",
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  },
+  "home": {
+    "title": "Discover Curated Link Collections",
+    "subtitle": "Explore high-quality collections curated by the community",
+    "featured": "Featured Collections",
+    "recent": "Recently Updated"
+  },
+  "collection": {
+    "links": "Links",
+    "by": "by",
+    "bookmark": "Bookmark",
+    "share": "Share",
+    "used": "I've used this",
+    "later": "Read later"
+  },
+  "myPage": {
+    "title": "My Page",
+    "myCollections": "My Collections",
+    "bookmarkedCollections": "Bookmarked Collections",
+    "bookmarkedLinks": "Bookmarked Links",
+    "noCollections": "You haven't created any collections yet",
+    "noBookmarks": "You haven't bookmarked anything yet"
+  }
+}

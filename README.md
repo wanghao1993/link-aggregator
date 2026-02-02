@@ -1,137 +1,144 @@
-# Link Aggregator App
+# Link Aggregator
 
-A React Native mobile application for collecting, organizing, and sharing links. Think of it as your personal Pocket, Raindrop.io, or Linktree - all in one app.
+A community-driven link aggregation platform built with Next.js 14, supporting internationalization.
 
 ## Features
 
-- **Save Links**: Quickly save URLs with titles, descriptions, and tags
-- **Organize**: Categorize links with folders and tags
-- **Search**: Full-text search across your saved links
-- **Share**: Share individual links or collections
-- **Offline Access**: All links stored locally with cloud sync option
-- **Dark Mode**: Full light/dark theme support
-- **Cross-platform**: iOS, Android, and Web
+- 🌍 **Internationalization**: Support for English and Chinese
+- 📚 **Collections**: Create and browse curated link collections
+- 🔖 **Bookmarking**: Save your favorite links and collections
+- 🎨 **Modern UI**: Clean and responsive design with Tailwind CSS
+- 📱 **Responsive**: Works seamlessly on desktop and mobile
 
 ## Tech Stack
 
-- **React Native** with **Expo** for cross-platform development
-- **TypeScript** for type safety
-- **React Navigation** for routing and navigation
-- **NativeWind** for styling (Tailwind CSS for React Native)
-- **Zustand** for state management
-- **React Hook Form + Zod** for form validation
-- **Async Storage** for local data persistence
-- **Expo Sharing** for sharing functionality
-- **Expo Clipboard** for copy/paste operations
-- **Expo Web Browser** for in-app browsing
-
-## Project Structure
-
-```
-src/
-├── components/     # Reusable UI components
-├── screens/        # App screens (Home, AddLink, Settings, etc.)
-├── navigation/     # Navigation configuration
-├── stores/         # Zustand stores for state management
-├── utils/          # Helper functions and utilities
-├── hooks/          # Custom React hooks
-├── types/          # TypeScript type definitions
-├── constants/      # App constants and configuration
-└── assets/         # Images, icons, fonts
-```
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: PostgreSQL with Prisma ORM
+- **i18n**: next-intl
+- **Icons**: Lucide React
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18 or higher
-- npm or yarn
-- Expo CLI (`npm install -g expo-cli`)
-- iOS Simulator (Mac only) or Android Studio for emulation
-- Expo Go app on physical device for testing
+- Node.js 18+ or Bun
+- pnpm (or npm/yarn)
+- PostgreSQL database
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone <your-repo-url>
 cd link-aggregator
 ```
 
 2. Install dependencies:
 ```bash
-npm install
+pnpm install
 ```
 
-3. Start the development server:
+3. Set up environment variables:
+Create a `.env` file in the root directory:
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/link_aggregator?schema=public"
+```
+
+4. Set up the database:
 ```bash
-npm start
+# Generate Prisma Client
+pnpm prisma generate
+
+# Run migrations
+pnpm prisma migrate dev
+
+# (Optional) Seed the database
+pnpm prisma db seed
 ```
 
-4. Run on specific platform:
+5. Run the development server:
 ```bash
-# iOS
-npm run ios
-
-# Android
-npm run android
-
-# Web
-npm run web
+pnpm dev
 ```
 
-## Development
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Adding a New Screen
+## Database Schema
 
-1. Create a new file in `src/screens/`
-2. Add the screen to the navigation stack in `src/navigation/`
-3. Export the screen component
+The application uses the following main models:
 
-### Adding a New Component
+- **User**: User accounts
+- **Collection**: Link collections created by users
+- **Link**: Individual links with metadata
+- **CollectionLink**: Many-to-many relationship between collections and links
+- **BookmarkedLink**: User bookmarks for links
+- **BookmarkedCollection**: User bookmarks for collections
 
-1. Create a new file in `src/components/`
-2. Follow the existing component patterns
-3. Add PropTypes or TypeScript interfaces
-4. Export the component
+## Project Structure
 
-### State Management
+```
+link-aggregator/
+├── app/
+│   └── [locale]/           # Internationalized routes
+│       ├── page.tsx        # Home page
+│       └── c/[slug]/       # Collection detail page
+├── components/
+│   ├── Header.tsx          # Navigation header
+│   ├── collection/         # Collection-related components
+│   └── link/               # Link-related components
+├── lib/
+│   ├── prisma.ts           # Prisma client
+│   └── utils.ts            # Utility functions
+├── messages/               # Translation files
+│   ├── en.json
+│   └── zh.json
+├── prisma/
+│   └── schema.prisma       # Database schema
+└── public/                 # Static assets
+```
 
-We use Zustand for state management. Create a new store in `src/stores/` when you need to manage global state.
+## Available Scripts
 
-## Design System
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm start` - Start production server
+- `pnpm lint` - Run ESLint
+- `pnpm prisma studio` - Open Prisma Studio
 
-- **Colors**: Defined in `src/constants/colors.ts`
-- **Typography**: Defined in `src/constants/typography.ts`
-- **Spacing**: 4px base unit (NativeWind spacing scale)
-- **Components**: Reusable components in `src/components/`
+## Internationalization
 
-## Future Enhancements
+The app supports multiple languages:
+- English (en) - Default
+- Chinese (zh)
 
-- [ ] Cloud synchronization (Firebase/Supabase)
-- [ ] Browser extension for one-click saving
-- [ ] Link preview generation
-- [ ] Automatic tagging with AI
-- [ ] Collaboration features
-- [ ] Import/export functionality
-- [ ] Statistics and analytics
-- [ ] Custom themes
-- [ ] Widget support for home screen
+Switch languages using the language selector in the header.
+
+## MVP Features Roadmap
+
+### Week 1: Content Structure & Display ✅
+- [x] Project initialization
+- [x] Database structure
+- [x] Collection page
+- [x] Home page
+- [ ] Website metadata fetching
+- [ ] Create collection functionality
+- [ ] Add links to collection
+
+### Week 2: User Behavior & Sharing
+- [ ] Authentication (Email Magic Link / OAuth)
+- [ ] User profile page
+- [ ] Bookmark functionality
+- [ ] Sharing & SEO optimization
+- [ ] Link status markers (used/later)
+- [ ] Visual polish
+- [ ] Deployment & seed content
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
 MIT
-
-## Acknowledgements
-
-- Icons from [@expo/vector-icons](https://icons.expo.fyi/)
-- UI inspiration from [Pocket](https://getpocket.com/), [Raindrop.io](https://raindrop.io/), and [Linktree](https://linktr.ee/)
-- Built with [Expo](https://expo.dev/) and [React Native](https://reactnative.dev/)
