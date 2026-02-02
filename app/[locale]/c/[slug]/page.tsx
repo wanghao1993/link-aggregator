@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma';
 import LinkCard from '@/components/link/LinkCard';
 import AddLinkDialog from '@/components/link/AddLinkDialog';
 import BookmarkButton from '@/components/collection/BookmarkButton';
+import { Button } from '@/components/ui/Button';
 import { Share2 } from 'lucide-react';
 
 interface CollectionPageProps {
@@ -67,74 +68,74 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     : false;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-background">
       <main className="container mx-auto px-4 py-8">
         {/* Collection Header */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 mb-8">
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex-grow">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="bg-card border rounded-lg p-6 mb-6">
+          <div className="flex items-start justify-between gap-6 mb-4">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-2xl md:text-3xl font-bold mb-2">
                 {collection.title}
               </h1>
               
               {collection.description && (
-                <p className="text-lg text-gray-600 mb-4">
+                <p className="text-muted-foreground mb-4">
                   {collection.description}
                 </p>
               )}
 
-              <div className="flex items-center space-x-4 text-sm text-gray-500">
-                <div className="flex items-center space-x-2">
+              <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
                   {collection.user.image ? (
                     <img
                       src={collection.user.image}
                       alt={collection.user.name || 'User'}
-                      className="w-8 h-8 rounded-full"
+                      className="w-6 h-6 rounded-full"
                     />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-semibold text-gray-600">
+                    <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs font-medium">
                       {(collection.user.name || 'U')[0].toUpperCase()}
                     </div>
                   )}
                   <span>
-                    {t('by')} <span className="font-semibold">{collection.user.name || 'Anonymous'}</span>
+                    {t('by')} <span className="font-medium text-foreground">{collection.user.name || 'Anonymous'}</span>
                   </span>
                 </div>
                 
-                <span>•</span>
+                <span className="text-muted-foreground/50">•</span>
                 <span>{collection.collectionLinks.length} {t('links')}</span>
-                <span>•</span>
+                <span className="text-muted-foreground/50">•</span>
                 <span>{collection._count.bookmarkedBy} bookmarks</span>
               </div>
             </div>
 
             {/* Action buttons */}
-            <div className="flex items-center space-x-3 ml-6">
+            <div className="flex items-center gap-2 shrink-0">
               <BookmarkButton
                 collectionId={collection.id}
                 isBookmarked={isBookmarked}
                 isAuthenticated={!!session?.user}
               />
               
-              <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+              <Button variant="outline" size="sm">
                 <Share2 className="w-4 h-4" />
-                <span>{t('share')}</span>
-              </button>
+                {t('share')}
+              </Button>
             </div>
           </div>
         </div>
 
         {/* Links List Header */}
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-gray-900">Links</h2>
+          <h2 className="text-lg font-semibold">Links</h2>
           <AddLinkDialog collectionId={collection.id} />
         </div>
 
         {/* Links List */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {collection.collectionLinks.length === 0 ? (
-            <div className="text-center py-12 bg-white rounded-lg">
-              <p className="text-gray-500 mb-4">No links in this collection yet.</p>
+            <div className="text-center py-12 bg-card border rounded-lg">
+              <p className="text-muted-foreground mb-4">No links in this collection yet.</p>
               <AddLinkDialog collectionId={collection.id} />
             </div>
           ) : (

@@ -29,7 +29,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className="min-h-screen bg-gray-50">
+      <body className="min-h-screen bg-background">
         <NextIntlClientProvider messages={messages}>
           <Header user={session?.user} />
           {children}

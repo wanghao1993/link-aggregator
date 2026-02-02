@@ -16,6 +16,7 @@ import {
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { addLinkSchema, type AddLinkInput } from '@/lib/validations/link';
 import { fetchMetadata } from '@/lib/metadata';
 
@@ -97,9 +98,9 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)} size="sm" className="flex items-center space-x-2">
-        <Plus className="w-4 h-4" />
-        <span>Add Link</span>
+      <Button onClick={() => setOpen(true)} size="sm">
+        <Plus data-icon="inline-start" />
+        Add Link
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
@@ -112,110 +113,109 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
               </DialogDescription>
             </DialogHeader>
 
-            <div className="px-6 py-4 space-y-4">
-              {/* URL */}
-              <div>
-                <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-1">
-                  URL *
-                </label>
-                <div className="flex space-x-2">
+            <div className="px-6 py-4">
+              <FieldGroup>
+                {/* URL */}
+                <Field>
+                  <FieldLabel htmlFor="url">URL</FieldLabel>
+                  <div className="flex gap-2">
+                    <Input
+                      id="url"
+                      type="url"
+                      placeholder="https://example.com"
+                      {...register('url')}
+                      disabled={isLoading}
+                      aria-invalid={!!errors.url}
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      onClick={handleFetchMetadata}
+                      disabled={!url || isFetchingMetadata || isLoading}
+                      variant="outline"
+                      size="sm"
+                    >
+                      {isFetchingMetadata ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        'Fetch'
+                      )}
+                    </Button>
+                  </div>
+                  {errors.url && (
+                    <p className="text-xs text-destructive mt-1">{errors.url.message}</p>
+                  )}
+                </Field>
+
+                {/* Title */}
+                <Field>
+                  <FieldLabel htmlFor="title">Title</FieldLabel>
                   <Input
-                    id="url"
-                    type="url"
-                    placeholder="https://example.com"
-                    {...register('url')}
+                    id="title"
+                    placeholder="Link title"
+                    {...register('title')}
                     disabled={isLoading}
+                    aria-invalid={!!errors.title}
                   />
-                  <Button
-                    type="button"
-                    onClick={handleFetchMetadata}
-                    disabled={!url || isFetchingMetadata || isLoading}
-                    variant="outline"
-                  >
-                    {isFetchingMetadata ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      'Fetch'
-                    )}
-                  </Button>
-                </div>
-                {errors.url && (
-                  <p className="text-sm text-red-600 mt-1">{errors.url.message}</p>
-                )}
-              </div>
+                  {errors.title && (
+                    <p className="text-xs text-destructive mt-1">{errors.title.message}</p>
+                  )}
+                </Field>
 
-              {/* Title */}
-              <div>
-                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-                  Title *
-                </label>
-                <Input
-                  id="title"
-                  placeholder="Link title"
-                  {...register('title')}
-                  disabled={isLoading}
-                />
-                {errors.title && (
-                  <p className="text-sm text-red-600 mt-1">{errors.title.message}</p>
-                )}
-              </div>
+                {/* Description */}
+                <Field>
+                  <FieldLabel htmlFor="description">Description</FieldLabel>
+                  <Textarea
+                    id="description"
+                    placeholder="Brief description of the link..."
+                    rows={3}
+                    {...register('description')}
+                    disabled={isLoading}
+                    aria-invalid={!!errors.description}
+                  />
+                  {errors.description && (
+                    <p className="text-xs text-destructive mt-1">{errors.description.message}</p>
+                  )}
+                </Field>
 
-              {/* Description */}
-              <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-                  Description
-                </label>
-                <Textarea
-                  id="description"
-                  placeholder="Brief description of the link..."
-                  rows={3}
-                  {...register('description')}
-                  disabled={isLoading}
-                />
-                {errors.description && (
-                  <p className="text-sm text-red-600 mt-1">{errors.description.message}</p>
-                )}
-              </div>
-
-              {/* Status */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Status
-                </label>
-                <div className="flex space-x-4">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      value=""
-                      {...register('status')}
-                      defaultChecked
-                      disabled={isLoading}
-                      className="mr-2"
-                    />
-                    <span className="text-sm">None</span>
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      value="used"
-                      {...register('status')}
-                      disabled={isLoading}
-                      className="mr-2"
-                    />
-                    <span className="text-sm">✓ I've used this</span>
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      value="later"
-                      {...register('status')}
-                      disabled={isLoading}
-                      className="mr-2"
-                    />
-                    <span className="text-sm">⏰ Read later</span>
-                  </label>
-                </div>
-              </div>
+                {/* Status */}
+                <Field>
+                  <FieldLabel>Status</FieldLabel>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2 text-sm cursor-pointer">
+                      <input
+                        type="radio"
+                        value=""
+                        {...register('status')}
+                        defaultChecked
+                        disabled={isLoading}
+                        className="w-4 h-4"
+                      />
+                      <span>None</span>
+                    </label>
+                    <label className="flex items-center gap-2 text-sm cursor-pointer">
+                      <input
+                        type="radio"
+                        value="used"
+                        {...register('status')}
+                        disabled={isLoading}
+                        className="w-4 h-4"
+                      />
+                      <span>✓ I've used this</span>
+                    </label>
+                    <label className="flex items-center gap-2 text-sm cursor-pointer">
+                      <input
+                        type="radio"
+                        value="later"
+                        {...register('status')}
+                        disabled={isLoading}
+                        className="w-4 h-4"
+                      />
+                      <span>⏰ Read later</span>
+                    </label>
+                  </div>
+                </Field>
+              </FieldGroup>
             </div>
 
             <DialogFooter>

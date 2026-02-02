@@ -77,38 +77,38 @@ export default async function MyPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <main className="container mx-auto px-4 py-8">
         {/* User Info */}
         <div className="mb-8">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-4">
             {session.user.image ? (
               <img
                 src={session.user.image}
                 alt={session.user.name || 'User'}
-                className="w-20 h-20 rounded-full"
+                className="w-16 h-16 rounded-full"
               />
             ) : (
-              <div className="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-semibold">
+              <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-semibold">
                 {(session.user.name || 'U')[0].toUpperCase()}
               </div>
             )}
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">{session.user.name}</h1>
-              <p className="text-gray-600">{session.user.email}</p>
+              <h1 className="text-2xl md:text-3xl font-bold">{session.user.name}</h1>
+              <p className="text-muted-foreground">{session.user.email}</p>
             </div>
           </div>
         </div>
 
         {/* My Collections */}
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6 text-gray-900">My Collections</h2>
+          <h2 className="text-xl font-semibold mb-4">My Collections</h2>
           {myCollections.length === 0 ? (
-            <div className="text-center py-12 bg-white rounded-lg">
-              <p className="text-gray-500 mb-4">You haven't created any collections yet.</p>
+            <div className="text-center py-12 bg-card border rounded-lg">
+              <p className="text-muted-foreground mb-4">You haven't created any collections yet.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {myCollections.map((collection) => (
                 <CollectionCard
                   key={collection.id}
@@ -131,8 +131,8 @@ export default async function MyPage() {
         {/* Bookmarked Collections */}
         {bookmarkedCollections.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-900">Bookmarked Collections</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <h2 className="text-xl font-semibold mb-4">Bookmarked Collections</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {bookmarkedCollections.map((bookmark) => (
                 <CollectionCard
                   key={bookmark.collection.id}
@@ -155,8 +155,8 @@ export default async function MyPage() {
         {/* Bookmarked Links */}
         {bookmarkedLinks.length > 0 && (
           <section>
-            <h2 className="text-2xl font-semibold mb-6 text-gray-900">Bookmarked Links</h2>
-            <div className="space-y-4">
+            <h2 className="text-xl font-semibold mb-4">Bookmarked Links</h2>
+            <div className="space-y-3">
               {bookmarkedLinks.map((bookmark) => (
                 <LinkCard
                   key={bookmark.link.id}

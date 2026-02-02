@@ -64,10 +64,10 @@ export default function BookmarkButton({
       onClick={handleBookmark}
       disabled={isLoading}
       variant={isBookmarked ? 'default' : 'outline'}
-      className="flex items-center space-x-2"
+      size="sm"
     >
-      <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current' : ''}`} />
-      <span>{isBookmarked ? 'Bookmarked' : 'Bookmark'}</span>
+      <Bookmark data-icon="inline-start" className={isBookmarked ? 'fill-current' : ''} />
+      {isBookmarked ? 'Bookmarked' : 'Bookmark'}
     </Button>
   );
 }

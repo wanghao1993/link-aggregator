@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
+import { Button } from '@/components/ui/Button';
+import { Separator } from '@/components/ui/separator';
 import CreateCollectionDialog from './collection/CreateCollectionDialog';
 import UserButton from './UserButton';
 
@@ -23,51 +25,51 @@ export default function Header({ user }: HeaderProps) {
   const locale = params.locale as string;
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur-lg shadow-sm">
+    <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-8">
-            <Link href={`/${locale}`} className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:from-blue-700 hover:to-purple-700 transition-all">
+        <div className="flex items-center justify-between h-14">
+          <div className="flex items-center gap-6">
+            <Link 
+              href={`/${locale}`} 
+              className="text-lg font-bold text-foreground hover:text-primary transition-colors"
+            >
               {t('appName')}
             </Link>
-            <nav className="hidden md:flex items-center space-x-6">
-              <Link 
-                href={`/${locale}`} 
-                className="text-gray-700 hover:text-gray-900 transition-colors"
-              >
-                {t('home')}
-              </Link>
-              <Link 
-                href={`/${locale}/collections`} 
-                className="text-gray-700 hover:text-gray-900 transition-colors"
-              >
-                {t('collections')}
-              </Link>
+            <Separator orientation="vertical" className="h-6 hidden md:block" />
+            <nav className="hidden md:flex items-center gap-1">
+              <Button variant="ghost" size="sm" asChild>
+                <Link href={`/${locale}`}>
+                  {t('home')}
+                </Link>
+              </Button>
+              <Button variant="ghost" size="sm" asChild>
+                <Link href={`/${locale}/collections`}>
+                  {t('collections')}
+                </Link>
+              </Button>
             </nav>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-2">
             {/* Create Collection Button - only show when logged in */}
             {user && <CreateCollectionDialog locale={locale} />}
 
             {/* Language switcher */}
-            <div className="flex items-center space-x-2">
-              <Link
-                href="/en"
-                className={`px-2 py-1 rounded ${
-                  locale === 'en' ? 'bg-gray-200 font-semibold' : 'hover:bg-gray-100'
-                }`}
+            <div className="flex items-center gap-1">
+              <Button
+                variant={locale === 'en' ? 'secondary' : 'ghost'}
+                size="sm"
+                asChild
               >
-                EN
-              </Link>
-              <Link
-                href="/zh"
-                className={`px-2 py-1 rounded ${
-                  locale === 'zh' ? 'bg-gray-200 font-semibold' : 'hover:bg-gray-100'
-                }`}
+                <Link href="/en">EN</Link>
+              </Button>
+              <Button
+                variant={locale === 'zh' ? 'secondary' : 'ghost'}
+                size="sm"
+                asChild
               >
-                中文
-              </Link>
+                <Link href="/zh">中文</Link>
+              </Button>
             </div>
 
             {/* User button */}

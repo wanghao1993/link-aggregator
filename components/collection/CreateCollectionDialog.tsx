@@ -17,6 +17,7 @@ import {
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { createCollectionSchema, type CreateCollectionInput } from '@/lib/validations/collection';
 
 interface CreateCollectionDialogProps {
@@ -76,9 +77,9 @@ export default function CreateCollectionDialog({ locale }: CreateCollectionDialo
 
   return (
     <>
-      <Button onClick={() => setOpen(true)} className="flex items-center space-x-2">
-        <Plus className="w-4 h-4" />
-        <span>Create Collection</span>
+      <Button onClick={() => setOpen(true)} size="sm">
+        <Plus data-icon="inline-start" />
+        Create
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
@@ -91,53 +92,53 @@ export default function CreateCollectionDialog({ locale }: CreateCollectionDialo
               </DialogDescription>
             </DialogHeader>
 
-            <div className="px-6 py-4 space-y-4">
-              {/* Title */}
-              <div>
-                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-                  Title *
-                </label>
-                <Input
-                  id="title"
-                  placeholder="e.g., AI & ML Resources"
-                  {...register('title')}
-                  disabled={isLoading}
-                />
-                {errors.title && (
-                  <p className="text-sm text-red-600 mt-1">{errors.title.message}</p>
-                )}
-              </div>
+            <div className="px-6 py-4">
+              <FieldGroup>
+                {/* Title */}
+                <Field>
+                  <FieldLabel htmlFor="title">Title</FieldLabel>
+                  <Input
+                    id="title"
+                    placeholder="e.g., AI & ML Resources"
+                    {...register('title')}
+                    disabled={isLoading}
+                    aria-invalid={!!errors.title}
+                  />
+                  {errors.title && (
+                    <p className="text-xs text-destructive mt-1">{errors.title.message}</p>
+                  )}
+                </Field>
 
-              {/* Description */}
-              <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-                  Description
-                </label>
-                <Textarea
-                  id="description"
-                  placeholder="Describe what this collection is about..."
-                  rows={4}
-                  {...register('description')}
-                  disabled={isLoading}
-                />
-                {errors.description && (
-                  <p className="text-sm text-red-600 mt-1">{errors.description.message}</p>
-                )}
-              </div>
+                {/* Description */}
+                <Field>
+                  <FieldLabel htmlFor="description">Description</FieldLabel>
+                  <Textarea
+                    id="description"
+                    placeholder="Describe what this collection is about..."
+                    rows={4}
+                    {...register('description')}
+                    disabled={isLoading}
+                    aria-invalid={!!errors.description}
+                  />
+                  {errors.description && (
+                    <p className="text-xs text-destructive mt-1">{errors.description.message}</p>
+                  )}
+                </Field>
 
-              {/* Public/Private */}
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="isPublic"
-                  {...register('isPublic')}
-                  disabled={isLoading}
-                  className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                />
-                <label htmlFor="isPublic" className="ml-2 block text-sm text-gray-700">
-                  Make this collection public
-                </label>
-              </div>
+                {/* Public/Private */}
+                <Field orientation="horizontal" className="items-center">
+                  <input
+                    type="checkbox"
+                    id="isPublic"
+                    {...register('isPublic')}
+                    disabled={isLoading}
+                    className="h-4 w-4 rounded border-input"
+                  />
+                  <FieldLabel htmlFor="isPublic" className="mb-0!">
+                    Make this collection public
+                  </FieldLabel>
+                </Field>
+              </FieldGroup>
             </div>
 
             <DialogFooter>

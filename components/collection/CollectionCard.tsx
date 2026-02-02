@@ -52,32 +52,34 @@ export default function CollectionCard({
 
   return (
     <Link href={`/${locale}/c/${slug}`} className="block h-full">
-      <Card className="h-full transition-all hover:shadow-lg hover:-translate-y-1 group">
+      <Card className="h-full transition-all hover:shadow-md group">
         <CardHeader>
           <CardTitle className="line-clamp-2 group-hover:text-primary transition-colors">
             {title}
           </CardTitle>
           {description && (
-            <CardDescription className="line-clamp-3 leading-relaxed">
+            <CardDescription className="line-clamp-3">
               {description}
             </CardDescription>
           )}
         </CardHeader>
-        <CardFooter className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Avatar className="h-7 w-7">
+        <CardFooter className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <Avatar className="h-6 w-6 shrink-0">
               <AvatarImage src={author.image || undefined} alt={author.name || 'User'} />
-              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-500 text-white text-xs font-semibold">
+              <AvatarFallback className="bg-primary text-primary-foreground text-xs">
                 {(author.name || 'U')[0].toUpperCase()}
               </AvatarFallback>
             </Avatar>
-            <span className="text-sm font-medium">{author.name || 'Anonymous'}</span>
+            <span className="text-xs font-medium truncate">{author.name || 'Anonymous'}</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Badge variant="secondary" className="text-xs">
-              {linkCount} links
+          <div className="flex items-center gap-2 shrink-0">
+            <Badge variant="secondary">
+              {linkCount}
             </Badge>
-            <span className="text-xs text-muted-foreground">{timeAgo(updatedAt)}</span>
+            <span className="text-xs text-muted-foreground hidden sm:inline">
+              {timeAgo(updatedAt)}
+            </span>
           </div>
         </CardFooter>
       </Card>
