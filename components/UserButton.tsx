@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useParams, useRouter } from 'next/navigation';
-import { LogOut, User as UserIcon, Settings } from 'lucide-react';
-import { Button } from './ui/Button';
+import { useParams, useRouter } from "next/navigation";
+import { LogOut, User as UserIcon, Settings } from "lucide-react";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,8 +10,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+} from "./ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface User {
   id?: string | null;
@@ -31,18 +31,15 @@ export default function UserButton({ user }: UserButtonProps) {
 
   if (!user) {
     return (
-      <Button
-        onClick={() => router.push(`/${locale}/auth/signin`)}
-        size="sm"
-      >
+      <Button onClick={() => router.push(`/${locale}/auth/signin`)} size="sm">
         Sign In
       </Button>
     );
   }
 
   const handleSignOut = async () => {
-    const response = await fetch('/api/auth/signout', {
-      method: 'POST',
+    const response = await fetch("/api/auth/signout", {
+      method: "POST",
     });
     if (response.ok) {
       router.push(`/${locale}`);
@@ -55,9 +52,12 @@ export default function UserButton({ user }: UserButtonProps) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user.image || undefined} alt={user.name || 'User'} />
+            <AvatarImage
+              src={user.image || undefined}
+              alt={user.name || "User"}
+            />
             <AvatarFallback className="bg-primary text-primary-foreground">
-              {(user.name || user.email || 'U')[0].toUpperCase()}
+              {(user.name || user.email || "U")[0].toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </Button>

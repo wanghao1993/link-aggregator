@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Bookmark } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Bookmark } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface BookmarkButtonProps {
   collectionId: string;
@@ -22,7 +22,7 @@ export default function BookmarkButton({
 
   const handleBookmark = async () => {
     if (!isAuthenticated) {
-      router.push('/auth/signin');
+      router.push("/auth/signin");
       return;
     }
 
@@ -33,27 +33,27 @@ export default function BookmarkButton({
         // Remove bookmark
         const response = await fetch(
           `/api/bookmarks/collections?collectionId=${collectionId}`,
-          { method: 'DELETE' }
+          { method: "DELETE" }
         );
 
-        if (!response.ok) throw new Error('Failed to remove bookmark');
+        if (!response.ok) throw new Error("Failed to remove bookmark");
         setIsBookmarked(false);
       } else {
         // Add bookmark
-        const response = await fetch('/api/bookmarks/collections', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        const response = await fetch("/api/bookmarks/collections", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ collectionId }),
         });
 
-        if (!response.ok) throw new Error('Failed to bookmark');
+        if (!response.ok) throw new Error("Failed to bookmark");
         setIsBookmarked(true);
       }
 
       router.refresh();
     } catch (error) {
-      console.error('Error toggling bookmark:', error);
-      alert('Failed to update bookmark. Please try again.');
+      console.error("Error toggling bookmark:", error);
+      alert("Failed to update bookmark. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -63,11 +63,14 @@ export default function BookmarkButton({
     <Button
       onClick={handleBookmark}
       disabled={isLoading}
-      variant={isBookmarked ? 'default' : 'outline'}
+      variant={isBookmarked ? "default" : "outline"}
       size="sm"
     >
-      <Bookmark data-icon="inline-start" className={isBookmarked ? 'fill-current' : ''} />
-      {isBookmarked ? 'Bookmarked' : 'Bookmark'}
+      <Bookmark
+        data-icon="inline-start"
+        className={isBookmarked ? "fill-current" : ""}
+      />
+      {isBookmarked ? "Bookmarked" : "Bookmark"}
     </Button>
   );
 }

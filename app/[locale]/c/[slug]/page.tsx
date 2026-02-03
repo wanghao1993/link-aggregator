@@ -1,12 +1,12 @@
-import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
-import { auth } from '@/auth';
-import { prisma } from '@/lib/prisma';
-import LinkCard from '@/components/link/LinkCard';
-import AddLinkDialog from '@/components/link/AddLinkDialog';
-import BookmarkButton from '@/components/collection/BookmarkButton';
-import { Button } from '@/components/ui/Button';
-import { Share2 } from 'lucide-react';
+import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import LinkCard from "@/components/link/LinkCard";
+import AddLinkDialog from "@/components/link/AddLinkDialog";
+import BookmarkButton from "@/components/collection/BookmarkButton";
+import { Button } from "@/components/ui/button";
+import { Share2 } from "lucide-react";
 
 interface CollectionPageProps {
   params: Promise<{
@@ -17,7 +17,7 @@ interface CollectionPageProps {
 
 export default async function CollectionPage({ params }: CollectionPageProps) {
   const { slug } = await params;
-  const t = await getTranslations('collection');
+  const t = await getTranslations("collection");
   const session = await auth();
 
   // Fetch collection with links
@@ -38,7 +38,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
           link: true,
         },
         orderBy: {
-          order: 'asc',
+          order: "asc",
         },
       },
       _count: {
@@ -77,7 +77,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
               <h1 className="text-2xl md:text-3xl font-bold mb-2">
                 {collection.title}
               </h1>
-              
+
               {collection.description && (
                 <p className="text-muted-foreground mb-4">
                   {collection.description}
@@ -89,21 +89,26 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                   {collection.user.image ? (
                     <img
                       src={collection.user.image}
-                      alt={collection.user.name || 'User'}
+                      alt={collection.user.name || "User"}
                       className="w-6 h-6 rounded-full"
                     />
                   ) : (
                     <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs font-medium">
-                      {(collection.user.name || 'U')[0].toUpperCase()}
+                      {(collection.user.name || "U")[0].toUpperCase()}
                     </div>
                   )}
                   <span>
-                    {t('by')} <span className="font-medium text-foreground">{collection.user.name || 'Anonymous'}</span>
+                    {t("by")}{" "}
+                    <span className="font-medium text-foreground">
+                      {collection.user.name || "Anonymous"}
+                    </span>
                   </span>
                 </div>
-                
+
                 <span className="text-muted-foreground/50">•</span>
-                <span>{collection.collectionLinks.length} {t('links')}</span>
+                <span>
+                  {collection.collectionLinks.length} {t("links")}
+                </span>
                 <span className="text-muted-foreground/50">•</span>
                 <span>{collection._count.bookmarkedBy} bookmarks</span>
               </div>
@@ -116,10 +121,10 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                 isBookmarked={isBookmarked}
                 isAuthenticated={!!session?.user}
               />
-              
+
               <Button variant="outline" size="sm">
                 <Share2 className="w-4 h-4" />
-                {t('share')}
+                {t("share")}
               </Button>
             </div>
           </div>
@@ -135,7 +140,9 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
         <div className="space-y-3">
           {collection.collectionLinks.length === 0 ? (
             <div className="text-center py-12 bg-card border rounded-lg">
-              <p className="text-muted-foreground mb-4">No links in this collection yet.</p>
+              <p className="text-muted-foreground mb-4">
+                No links in this collection yet.
+              </p>
               <AddLinkDialog collectionId={collection.id} />
             </div>
           ) : (
@@ -160,7 +167,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
 // Generate metadata for SEO
 export async function generateMetadata({ params }: CollectionPageProps) {
   const { slug } = await params;
-  
+
   const collection = await prisma.collection.findUnique({
     where: {
       slug,
@@ -174,16 +181,20 @@ export async function generateMetadata({ params }: CollectionPageProps) {
 
   if (!collection) {
     return {
-      title: 'Collection Not Found',
+      title: "Collection Not Found",
     };
   }
 
   return {
     title: collection.title,
-    description: collection.description || `Explore ${collection.title} - A curated collection of links`,
+    description:
+      collection.description ||
+      `Explore ${collection.title} - A curated collection of links`,
     openGraph: {
       title: collection.title,
-      description: collection.description || `Explore ${collection.title} - A curated collection of links`,
+      description:
+        collection.description ||
+        `Explore ${collection.title} - A curated collection of links`,
     },
   };
 }

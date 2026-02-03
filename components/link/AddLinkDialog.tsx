@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Plus, Loader2 } from 'lucide-react';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus, Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -12,13 +12,13 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from '@/components/ui/Dialog';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Textarea } from '@/components/ui/Textarea';
-import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
-import { addLinkSchema, type AddLinkInput } from '@/lib/validations/link';
-import { fetchMetadata } from '@/lib/metadata';
+} from "@/components/ui/Dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { addLinkSchema, type AddLinkInput } from "@/lib/validations/link";
+import { fetchMetadata } from "@/lib/metadata";
 
 interface AddLinkDialogProps {
   collectionId: string;
@@ -41,7 +41,7 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
     resolver: zodResolver(addLinkSchema),
   });
 
-  const url = watch('url');
+  const url = watch("url");
 
   const handleFetchMetadata = async () => {
     if (!url) return;
@@ -49,17 +49,17 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
     try {
       setIsFetchingMetadata(true);
       const metadata = await fetchMetadata(url);
-      
-      setValue('title', metadata.title);
+
+      setValue("title", metadata.title);
       if (metadata.description) {
-        setValue('description', metadata.description);
+        setValue("description", metadata.description);
       }
       if (metadata.favicon) {
-        setValue('favicon', metadata.favicon);
+        setValue("favicon", metadata.favicon);
       }
     } catch (error) {
-      console.error('Error fetching metadata:', error);
-      alert('Failed to fetch metadata. Please fill in the details manually.');
+      console.error("Error fetching metadata:", error);
+      alert("Failed to fetch metadata. Please fill in the details manually.");
     } finally {
       setIsFetchingMetadata(false);
     }
@@ -68,29 +68,33 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
   const onSubmit = async (data: AddLinkInput) => {
     try {
       setIsLoading(true);
-      
+
       const response = await fetch(`/api/collections/${collectionId}/links`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || 'Failed to add link');
+        throw new Error(error.error || "Failed to add link");
       }
 
       // Close dialog and reset form
       setOpen(false);
       reset();
-      
+
       // Refresh the page to show new link
       router.refresh();
     } catch (error) {
-      console.error('Error adding link:', error);
-      alert(error instanceof Error ? error.message : 'Failed to add link. Please try again.');
+      console.error("Error adding link:", error);
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Failed to add link. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -109,7 +113,8 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
             <DialogHeader>
               <DialogTitle>Add Link to Collection</DialogTitle>
               <DialogDescription>
-                Add a new link to this collection. Paste a URL to automatically fetch metadata.
+                Add a new link to this collection. Paste a URL to automatically
+                fetch metadata.
               </DialogDescription>
             </DialogHeader>
 
@@ -123,7 +128,7 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
                       id="url"
                       type="url"
                       placeholder="https://example.com"
-                      {...register('url')}
+                      {...register("url")}
                       disabled={isLoading}
                       aria-invalid={!!errors.url}
                       className="flex-1"
@@ -138,12 +143,14 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
                       {isFetchingMetadata ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : (
-                        'Fetch'
+                        "Fetch"
                       )}
                     </Button>
                   </div>
                   {errors.url && (
-                    <p className="text-xs text-destructive mt-1">{errors.url.message}</p>
+                    <p className="text-xs text-destructive mt-1">
+                      {errors.url.message}
+                    </p>
                   )}
                 </Field>
 
@@ -153,12 +160,14 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
                   <Input
                     id="title"
                     placeholder="Link title"
-                    {...register('title')}
+                    {...register("title")}
                     disabled={isLoading}
                     aria-invalid={!!errors.title}
                   />
                   {errors.title && (
-                    <p className="text-xs text-destructive mt-1">{errors.title.message}</p>
+                    <p className="text-xs text-destructive mt-1">
+                      {errors.title.message}
+                    </p>
                   )}
                 </Field>
 
@@ -169,12 +178,14 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
                     id="description"
                     placeholder="Brief description of the link..."
                     rows={3}
-                    {...register('description')}
+                    {...register("description")}
                     disabled={isLoading}
                     aria-invalid={!!errors.description}
                   />
                   {errors.description && (
-                    <p className="text-xs text-destructive mt-1">{errors.description.message}</p>
+                    <p className="text-xs text-destructive mt-1">
+                      {errors.description.message}
+                    </p>
                   )}
                 </Field>
 
@@ -186,7 +197,7 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
                       <input
                         type="radio"
                         value=""
-                        {...register('status')}
+                        {...register("status")}
                         defaultChecked
                         disabled={isLoading}
                         className="w-4 h-4"
@@ -197,7 +208,7 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
                       <input
                         type="radio"
                         value="used"
-                        {...register('status')}
+                        {...register("status")}
                         disabled={isLoading}
                         className="w-4 h-4"
                       />
@@ -207,7 +218,7 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
                       <input
                         type="radio"
                         value="later"
-                        {...register('status')}
+                        {...register("status")}
                         disabled={isLoading}
                         className="w-4 h-4"
                       />
@@ -228,7 +239,7 @@ export default function AddLinkDialog({ collectionId }: AddLinkDialogProps) {
                 Cancel
               </Button>
               <Button type="submit" disabled={isLoading || isFetchingMetadata}>
-                {isLoading ? 'Adding...' : 'Add Link'}
+                {isLoading ? "Adding..." : "Add Link"}
               </Button>
             </DialogFooter>
           </form>

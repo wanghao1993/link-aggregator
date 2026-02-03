@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
-import { Plus } from 'lucide-react';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { Plus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -13,22 +13,27 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from '@/components/ui/Dialog';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Textarea } from '@/components/ui/Textarea';
-import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
-import { createCollectionSchema, type CreateCollectionInput } from '@/lib/validations/collection';
+} from "@/components/ui/Dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  createCollectionSchema,
+  type CreateCollectionInput,
+} from "@/lib/validations/collection";
 
 interface CreateCollectionDialogProps {
   locale: string;
 }
 
-export default function CreateCollectionDialog({ locale }: CreateCollectionDialogProps) {
+export default function CreateCollectionDialog({
+  locale,
+}: CreateCollectionDialogProps) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const t = useTranslations('collection');
+  const t = useTranslations("collection");
 
   const {
     register,
@@ -45,31 +50,31 @@ export default function CreateCollectionDialog({ locale }: CreateCollectionDialo
   const onSubmit = async (data: CreateCollectionInput) => {
     try {
       setIsLoading(true);
-      
-      const response = await fetch('/api/collections', {
-        method: 'POST',
+
+      const response = await fetch("/api/collections", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create collection');
+        throw new Error("Failed to create collection");
       }
 
       const collection = await response.json();
-      
+
       // Close dialog and reset form
       setOpen(false);
       reset();
-      
+
       // Redirect to the new collection
       router.push(`/${locale}/c/${collection.slug}`);
       router.refresh();
     } catch (error) {
-      console.error('Error creating collection:', error);
-      alert('Failed to create collection. Please try again.');
+      console.error("Error creating collection:", error);
+      alert("Failed to create collection. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -100,12 +105,14 @@ export default function CreateCollectionDialog({ locale }: CreateCollectionDialo
                   <Input
                     id="title"
                     placeholder="e.g., AI & ML Resources"
-                    {...register('title')}
+                    {...register("title")}
                     disabled={isLoading}
                     aria-invalid={!!errors.title}
                   />
                   {errors.title && (
-                    <p className="text-xs text-destructive mt-1">{errors.title.message}</p>
+                    <p className="text-xs text-destructive mt-1">
+                      {errors.title.message}
+                    </p>
                   )}
                 </Field>
 
@@ -116,12 +123,14 @@ export default function CreateCollectionDialog({ locale }: CreateCollectionDialo
                     id="description"
                     placeholder="Describe what this collection is about..."
                     rows={4}
-                    {...register('description')}
+                    {...register("description")}
                     disabled={isLoading}
                     aria-invalid={!!errors.description}
                   />
                   {errors.description && (
-                    <p className="text-xs text-destructive mt-1">{errors.description.message}</p>
+                    <p className="text-xs text-destructive mt-1">
+                      {errors.description.message}
+                    </p>
                   )}
                 </Field>
 
@@ -130,7 +139,7 @@ export default function CreateCollectionDialog({ locale }: CreateCollectionDialo
                   <input
                     type="checkbox"
                     id="isPublic"
-                    {...register('isPublic')}
+                    {...register("isPublic")}
                     disabled={isLoading}
                     className="h-4 w-4 rounded border-input"
                   />
@@ -151,7 +160,7 @@ export default function CreateCollectionDialog({ locale }: CreateCollectionDialo
                 Cancel
               </Button>
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? 'Creating...' : 'Create Collection'}
+                {isLoading ? "Creating..." : "Create Collection"}
               </Button>
             </DialogFooter>
           </form>

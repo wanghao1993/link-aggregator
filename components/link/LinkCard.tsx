@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { ExternalLink, Check, Clock } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/Button';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { ExternalLink, Check, Clock } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface LinkCardProps {
   id: string;
@@ -12,7 +12,7 @@ interface LinkCardProps {
   description?: string | null;
   favicon?: string | null;
   status?: string | null;
-  onStatusChange?: (linkId: string, status: 'used' | 'later' | null) => void;
+  onStatusChange?: (linkId: string, status: "used" | "later" | null) => void;
 }
 
 export default function LinkCard({
@@ -24,7 +24,7 @@ export default function LinkCard({
   status,
   onStatusChange,
 }: LinkCardProps) {
-  const handleStatusClick = (newStatus: 'used' | 'later') => {
+  const handleStatusClick = (newStatus: "used" | "later") => {
     if (onStatusChange) {
       onStatusChange(id, status === newStatus ? null : newStatus);
     }
@@ -57,7 +57,7 @@ export default function LinkCard({
                 {title}
               </h3>
             </a>
-            
+
             {description && (
               <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                 {description}
@@ -78,16 +78,16 @@ export default function LinkCard({
           <div className="shrink-0 flex gap-1">
             <Button
               size="icon-sm"
-              variant={status === 'used' ? 'default' : 'outline'}
-              onClick={() => handleStatusClick('used')}
+              variant={status === "used" ? "default" : "outline"}
+              onClick={() => handleStatusClick("used")}
               title="I've used this"
             >
               <Check className="h-3 w-3" />
             </Button>
             <Button
               size="icon-sm"
-              variant={status === 'later' ? 'secondary' : 'outline'}
-              onClick={() => handleStatusClick('later')}
+              variant={status === "later" ? "secondary" : "outline"}
+              onClick={() => handleStatusClick("later")}
               title="Read later"
             >
               <Clock className="h-3 w-3" />

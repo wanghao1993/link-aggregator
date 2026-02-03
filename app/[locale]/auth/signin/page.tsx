@@ -1,8 +1,14 @@
-import { signIn } from '@/auth';
-import { Github } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { signIn } from "@/auth";
+import { Github } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 export default function SignInPage() {
   return (
@@ -17,8 +23,8 @@ export default function SignInPage() {
         <CardContent className="space-y-4">
           <form
             action={async () => {
-              'use server';
-              await signIn('github', { redirectTo: '/' });
+              "use server";
+              await signIn("github", { redirectTo: "/" });
             }}
           >
             <Button type="submit" className="w-full">
@@ -38,12 +44,16 @@ export default function SignInPage() {
 
           <form
             action={async () => {
-              'use server';
-              await signIn('google', { redirectTo: '/' });
+              "use server";
+              await signIn("google", { redirectTo: "/" });
             }}
           >
             <Button type="submit" variant="outline" className="w-full">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" data-icon="inline-start">
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 24 24"
+                data-icon="inline-start"
+              >
                 <path
                   fill="currentColor"
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
