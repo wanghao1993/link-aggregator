@@ -9,7 +9,7 @@ import CreateCollectionDialog from './collection/CreateCollectionDialog';
 import UserButton from './UserButton';
 
 interface User {
-  id: string;
+  id?: string | null;
   name?: string | null;
   email?: string | null;
   image?: string | null;

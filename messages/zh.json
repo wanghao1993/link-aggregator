@@ -28,5 +28,27 @@
     "bookmarkedLinks": "收藏的链接",
     "noCollections": "你还没有创建任何合集",
     "noBookmarks": "你还没有收藏任何内容"
+  },
+  "settings": {
+    "title": "设置",
+    "profilePicture": "个人头像",
+    "profilePictureDescription": "上传新的个人头像。支持 JPG、PNG、GIF、WebP 格式，最大 5MB。",
+    "uploadNewPicture": "上传新头像",
+    "uploading": "上传中...",
+    "clickToSelect": "点击选择新的个人头像",
+    "personalInformation": "个人信息",
+    "personalInformationDescription": "更新您的个人资料以及在平台上的显示信息。",
+    "displayName": "显示名称",
+    "enterDisplayName": "输入您的显示名称",
+    "emailAddress": "邮箱地址",
+    "emailCannotBeChanged": "邮箱地址不可更改",
+    "saveChanges": "保存更改",
+    "saving": "保存中...",
+    "avatarUpdated": "头像更新成功",
+    "profileUpdated": "个人资料更新成功",
+    "errors": {
+      "fileTypeNotAllowed": "仅支持 JPG、PNG、GIF 和 WebP 格式的图片",
+      "fileTooLarge": "图片大小必须小于 5MB"
+    }
   }
 }

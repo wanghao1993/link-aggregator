@@ -28,5 +28,27 @@
     "bookmarkedLinks": "Bookmarked Links",
     "noCollections": "You haven't created any collections yet",
     "noBookmarks": "You haven't bookmarked anything yet"
+  },
+  "settings": {
+    "title": "Settings",
+    "profilePicture": "Profile Picture",
+    "profilePictureDescription": "Upload a new profile picture. JPG, PNG, GIF, WebP up to 5MB.",
+    "uploadNewPicture": "Upload New Picture",
+    "uploading": "Uploading...",
+    "clickToSelect": "Click to select a new profile picture",
+    "personalInformation": "Personal Information",
+    "personalInformationDescription": "Update your personal details and how they appear on the platform.",
+    "displayName": "Display Name",
+    "enterDisplayName": "Enter your display name",
+    "emailAddress": "Email Address",
+    "emailCannotBeChanged": "Email cannot be changed",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
+    "avatarUpdated": "Avatar updated successfully",
+    "profileUpdated": "Profile updated successfully",
+    "errors": {
+      "fileTypeNotAllowed": "Only JPEG, PNG, GIF, and WebP images are allowed",
+      "fileTooLarge": "Image size must be less than 5MB"
+    }
   }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { LogOut, User as UserIcon } from 'lucide-react';
+import { LogOut, User as UserIcon, Settings } from 'lucide-react';
 import { Button } from './ui/Button';
 import {
   DropdownMenu,
@@ -14,7 +14,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 interface User {
-  id: string;
+  id?: string | null;
   name?: string | null;
   email?: string | null;
   image?: string | null;
@@ -73,6 +73,10 @@ export default function UserButton({ user }: UserButtonProps) {
         <DropdownMenuItem onClick={() => router.push(`/${locale}/me`)}>
           <UserIcon />
           My Page
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push(`/${locale}/settings`)}>
+          <Settings />
+          Settings
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onClick={handleSignOut}>
